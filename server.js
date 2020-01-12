@@ -1,4 +1,5 @@
 const express = require('express');
+const path = require('path');
 const connectDataBase = require('./config/database');
 const colors = require('colors');
 const app = express();
@@ -6,12 +7,9 @@ connectDataBase();
 
 // Initialize Middleware
 app.use(express.json({ extented: false }));
-app.get('/', (req, res) =>
-  res.json({
-    connection: true,
-    status: 'Backend API Running'
-  })
-);
+
+// Use static file and folders
+app.use(express.static(path.join(__dirname, 'public')));
 
 // Define Routes
 app.use('/api/v1/users', require('./routes/users'));
